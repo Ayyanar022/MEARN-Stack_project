@@ -1,7 +1,18 @@
+import { Outlet } from "react-router-dom";
 import "./App.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
-  return <div className="text-blue-900 font-bold text-2xl">Hello Ayyanar</div>;
+  return (
+    <>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </>
+  );
 }
 
 export default App;
