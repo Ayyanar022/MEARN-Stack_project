@@ -6,7 +6,7 @@ const Logo = ({ w, h }) => {
       width={w}
       height={h}
       viewBox="0 0 370.16679528778167 155.08501865265873"
-      class="css-1j8o68f"
+      className="css-1j8o68f"
     >
       <defs id="SvgjsDefs1029"></defs>
       <g

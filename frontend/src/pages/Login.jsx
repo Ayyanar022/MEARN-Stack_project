@@ -33,7 +33,7 @@ const Login = () => {
             <img src={loginIcons} alt=" Signin logo" />
           </div>
 
-          <form className="mt-1">
+          <form className="mt-2 flex flex-col gap-2 ">
             <div className="grid mt-2">
               <label>Email:</label>
               <div className="bg-slate-100 p-2">
