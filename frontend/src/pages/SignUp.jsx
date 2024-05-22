@@ -4,6 +4,8 @@ import loginIcons from "../assest/signin.gif";
 import { FaRegEye } from "react-icons/fa"; // Eye open
 import { IoEyeOffOutline } from "react-icons/io5"; // Eye off
 import imageTobase64 from "../helpers/imageTobase64";
+import SummaryApi from "../common/index";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,9 +38,26 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
+
+    if (data.password !== data.confirmPassword) {
+      return;
+    }
+
+    const dataResponse = await fetch(SummaryApi.signup.url, {
+      method: SummaryApi.signup.method,
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const resData = await dataResponse.json();
+
+    if (resData.success) toast.success(resData.message);
+
+    if (resData.error) toast.error(resData.message);
   };
 
   return (
