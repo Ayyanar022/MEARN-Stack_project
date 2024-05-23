@@ -1,11 +1,16 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import loginIcons from "../assest/signin.gif";
 import { FaRegEye } from "react-icons/fa"; // Eye open
 import { IoEyeOffOutline } from "react-icons/io5"; // Eye off
+import SummaryApi from "../common";
+import { toast } from "react-toastify";
+import Context from "../context";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const { current_userDetails } = useContext(Context);
 
   const [data, setData] = useState({
     email: "",
@@ -20,9 +25,31 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
+
+    const dataResponse = await fetch(SummaryApi.signIn.url, {
+      method: SummaryApi.signIn.method,
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const dataApi = await dataResponse.json();
+    console.log("dataApi", dataApi);
+    console.log("dataApi", dataApi);
+    if (dataApi.success) {
+      toast.success(dataApi.message);
+
+      navigate("/");
+      current_userDetails();
+    }
+
+    if (dataApi.err) {
+      toast.error(dataApi.message);
+    }
   };
 
   return (

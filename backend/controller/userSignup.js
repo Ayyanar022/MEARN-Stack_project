@@ -1,5 +1,5 @@
 const userModel = require("../models/userModel");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 async function userSignUpController(req, res) {
   try {
@@ -36,6 +36,7 @@ async function userSignUpController(req, res) {
 
     const payLoad = {
       ...req.body,
+      roll: "GENERAL",
       password: hashPassword,
     };
     const userData = userModel(payLoad);
@@ -47,9 +48,9 @@ async function userSignUpController(req, res) {
       error: false,
       message: "User Created Successfully..",
     });
-  } catch (error) {
+  } catch (err) {
     res.json({
-      message: error.message || error,
+      message: err.message || err,
       error: true,
       success: false,
     });

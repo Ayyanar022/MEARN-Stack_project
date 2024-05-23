@@ -72,3 +72,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 15-5-2024 - i started this project " I hope its going to be my new success"
 day 2- 20-5-24
 -> react iocns
+
+day 3 ->21-5-24
+
+day 4 -> 22-5-24 (morning 7-8.45) (ninght 8-10.40)
+1.bcryptjs- backend
+2.jsonwebtoken - backend
+3.npm i cookie-parser
+
+work:authtoken
+
+day 5 -> 23-5-24 (morning ) (night )

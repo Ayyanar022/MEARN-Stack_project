@@ -3,9 +3,33 @@ import Logo from "./Logo";
 import { BiSearchAlt } from "react-icons/bi";
 import { BiSolidUserCircle } from "react-icons/bi"; // user icon
 import { LuShoppingCart } from "react-icons/lu"; // cart icon
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import SummaryApi from "../common";
+import { toast } from "react-toastify";
+import { setUserDetails } from "../store/userSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state?.user?.user);
+  console.log("user headre", user);
+  const handleLogout = async (e) => {
+    const fetchData = await fetch(SummaryApi.logOut.url, {
+      method: SummaryApi.logOut.method,
+      credentials: "include",
+    });
+
+    const responseData = await fetchData.json();
+    console.log("espo", responseData);
+    if (responseData.success) {
+      toast.success(responseData.message);
+      dispatch(setUserDetails(null));
+    }
+
+    if (responseData.error) {
+      toast.error(responseData.message);
+    }
+  };
   return (
     <header className="h-16 shadow-md lg:px-5 bg-white">
       <div className="h-full items-center flex container mx-auto px-4 justify-between">
@@ -28,7 +52,15 @@ const Header = () => {
 
         <div className=" flex items-center gap-7">
           <div className=" text-4xl cursor-pointer">
-            <BiSolidUserCircle />
+            {user?.profilepic ? (
+              <img
+                src={user?.profilepic}
+                className="w-10 h-10 rounded-full"
+                alt={user?.name}
+              />
+            ) : (
+              <BiSolidUserCircle />
+            )}
           </div>
 
           <div className="text-3xl relative cursor-pointer ">
@@ -41,12 +73,21 @@ const Header = () => {
           </div>
 
           <div className="flex justify-center items-center">
-            <Link
-              to={"/login"}
-              className="px-4 py-1 text-lg bg-red-500 text-white rounded-full hover:bg-red-600"
-            >
-              Login
-            </Link>
+            {user?._id ? (
+              <button
+                className="px-4 py-1 text-lg bg-red-500 text-white rounded-full hover:bg-red-600"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to={"/login"}
+                className="px-4 py-1 text-lg bg-red-500 text-white rounded-full hover:bg-red-600"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
       </div>

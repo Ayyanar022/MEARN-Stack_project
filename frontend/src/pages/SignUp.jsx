@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginIcons from "../assest/signin.gif";
 import { FaRegEye } from "react-icons/fa"; // Eye open
 import { IoEyeOffOutline } from "react-icons/io5"; // Eye off
@@ -18,6 +18,8 @@ const SignUp = () => {
     confirmPassword: "",
     profilepic: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChnage = (e) => {
     const { name, value } = e.target;
@@ -55,8 +57,10 @@ const SignUp = () => {
 
     const resData = await dataResponse.json();
 
-    if (resData.success) toast.success(resData.message);
-
+    if (resData.success) {
+      toast.success(resData.message);
+      navigate("/login");
+    }
     if (resData.error) toast.error(resData.message);
   };
 
