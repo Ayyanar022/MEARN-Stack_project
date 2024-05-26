@@ -17,6 +17,14 @@ const SummaryApi = {
     url: `${backendDomain}/api/logout`,
     method: "get",
   },
+  allUsers: {
+    url: `${backendDomain}/api/all-users`,
+    method: "get",
+  },
+  userRoleUpdate: {
+    url: `${backendDomain}/api/userRole-update`,
+    method: "post",
+  },
 };
 
 export default SummaryApi;

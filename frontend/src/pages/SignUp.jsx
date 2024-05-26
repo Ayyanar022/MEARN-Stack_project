@@ -44,6 +44,7 @@ const SignUp = () => {
     e.preventDefault();
 
     if (data.password !== data.confirmPassword) {
+      toast.warning("Passworn Not Match");
       return;
     }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "./Logo";
 import { BiSearchAlt } from "react-icons/bi";
 import { BiSolidUserCircle } from "react-icons/bi"; // user icon
@@ -8,11 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import SummaryApi from "../common";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
+import ROLE from "../common/role";
 
 const Header = () => {
+  const [adminMenuDisplay, setAdminMenuDisplay] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.user?.user);
-  console.log("user headre", user);
+
   const handleLogout = async (e) => {
     const fetchData = await fetch(SummaryApi.logOut.url, {
       method: SummaryApi.logOut.method,
@@ -20,18 +22,22 @@ const Header = () => {
     });
 
     const responseData = await fetchData.json();
-    console.log("espo", responseData);
-    if (responseData.success) {
+
+    if (responseData?.success) {
       toast.success(responseData.message);
       dispatch(setUserDetails(null));
     }
 
-    if (responseData.error) {
+    if (responseData?.error) {
       toast.error(responseData.message);
     }
   };
+
+  const handleAdminMenuDisplay = (e) => {
+    setAdminMenuDisplay((prev) => !prev);
+  };
   return (
-    <header className="h-16 shadow-md lg:px-5 bg-white">
+    <header className="h-16 shadow-md lg:px-5 bg-white  ">
       <div className="h-full items-center flex container mx-auto px-4 justify-between">
         <div>
           <Link to={"/"}>
@@ -51,15 +57,37 @@ const Header = () => {
         </div>
 
         <div className=" flex items-center gap-7">
-          <div className=" text-4xl cursor-pointer">
-            {user?.profilepic ? (
-              <img
-                src={user?.profilepic}
-                className="w-10 h-10 rounded-full"
-                alt={user?.name}
-              />
-            ) : (
-              <BiSolidUserCircle />
+          <div className="relative  flex justify-center items-center">
+            {user?._id && (
+              <div
+                className=" text-4xl cursor-pointer"
+                onClick={handleAdminMenuDisplay}
+              >
+                {user?.profilepic ? (
+                  <img
+                    src={user?.profilepic}
+                    className="w-10 h-10 rounded-full"
+                    alt={user?.name}
+                  />
+                ) : (
+                  <BiSolidUserCircle />
+                )}
+              </div>
+            )}
+
+            {adminMenuDisplay && (
+              <div className="absolute bg-white bottom-0 top-9 hidden md:block   h-fit p-2 shadow-lg rounded text-center">
+                {user?.role === ROLE?.ADMIN && (
+                  <nav>
+                    <Link
+                      to={"admin-panel/products"}
+                      className="whitespace-nowrap hover:bg-slate-100"
+                    >
+                      Admin Panel
+                    </Link>
+                  </nav>
+                )}
+              </div>
             )}
           </div>
 
