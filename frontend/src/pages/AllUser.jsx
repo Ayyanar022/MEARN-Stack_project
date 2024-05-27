@@ -68,7 +68,7 @@ const AllUser = () => {
               <td className="text-center text-lg p-1">
                 <button
                   onClick={() => handlePopupClick(user)}
-                  className="text-xl font-bold bg-green-100 p-1 rounded-full"
+                  className="text-xl font-bold bg-green-100 p-1 rounded-full hover:bg-green-400 transition-all"
                 >
                   <LiaUserEditSolid />
                 </button>

@@ -81,6 +81,7 @@ const Header = () => {
                   <nav>
                     <Link
                       to={"admin-panel/products"}
+                      onClick={handleAdminMenuDisplay}
                       className="whitespace-nowrap hover:bg-slate-100"
                     >
                       Admin Panel
