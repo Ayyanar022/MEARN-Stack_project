@@ -68,7 +68,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
- 
+
 15-5-2024 - i started this project " I hope its going to be my new success"
 day 2- 20-5-24
 -> react iocns
@@ -86,3 +86,5 @@ day 5 -> 23-5-24 (morning ) (night )
 
 27-5-24
 cloudinary - > we can store our website image here . its a website
+
+"start": "react-app-rewired start",

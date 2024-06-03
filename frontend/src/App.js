@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 // for tostify
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useEffect } from "react";
@@ -33,7 +33,20 @@ function App() {
   return (
     <>
       <Context.Provider value={{ current_userDetails }}>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
+        <ToastContainer
+          position="top-right"
+          autoClose={1800}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover={false}
+          theme="dark"
+          transition={Bounce}
+        />
         <Header />
         <main className="min-h-[calc(100vh-112px)]">
           <Outlet />

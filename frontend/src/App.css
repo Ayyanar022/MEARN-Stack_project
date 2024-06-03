@@ -14,3 +14,8 @@ aside {
 .userTable td {
   @apply border text-base;
 }
+
+/** scrollbar hidden */
+.scrollbar-hiden::-webkit-scrollbar {
+  display: none;
+}

@@ -8,15 +8,16 @@ import DisplayBigImage from "./DisplayBigImage";
 import SummaryApi from "../common/index";
 import { toast } from "react-toastify";
 
-const UploadProduct = ({ onClose ,fetchProduct}) => {
+const AdminEditCard = ({ onClose, product, fetchProduct }) => {
   const [data, setData] = useState({
-    productName: "",
-    brandName: "",
-    category: "",
-    productImage: [],
-    description: "",
-    price: "",
-    sellingPrice: "",
+    ...product,
+    productName: product?.productName,
+    brandName: product?.brandName,
+    category: product?.category,
+    productImage: product?.productImage || [],
+    description: product?.description,
+    price: product?.price,
+    sellingPrice: product?.sellingPrice,
   });
 
   const handleCancel = () => {
@@ -74,9 +75,10 @@ const UploadProduct = ({ onClose ,fetchProduct}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("data", data);
 
-    const response = await fetch(SummaryApi.uploadProduct.url, {
-      method: SummaryApi.uploadProduct.method,
+    const response = await fetch(SummaryApi.editProduct.url, {
+      method: SummaryApi.editProduct.method,
       credentials: "include",
       headers: {
         "content-type": "application/json",
@@ -87,10 +89,10 @@ const UploadProduct = ({ onClose ,fetchProduct}) => {
     const responseData = await response.json();
 
     if (responseData.success) {
+      fetchProduct();
       toast.success(responseData.message);
       handleCancel();
       onClose();
-      fetchProduct()
     }
 
     if (responseData.error) {
@@ -103,7 +105,7 @@ const UploadProduct = ({ onClose ,fetchProduct}) => {
     <div className="fixed w-full h-full bg-slate-200 bg-opacity-35 left-0 top-0 bottom-0 right-0 flex justify-center items-center ">
       <div className="bg-white p-4 rounded w-full max-w-2xl h-full max-h-[80%] overflow-hidden ">
         <div className="flex justify-center items-center pb-3">
-          <h2 className="font-bold text-lg">Upload Product</h2>
+          <h2 className="font-bold text-lg">Edit Product</h2>
           <div
             className="w-fit ml-auto text-xl hover:text-red-500 cursor-pointer"
             onClick={onClose}
@@ -265,7 +267,7 @@ const UploadProduct = ({ onClose ,fetchProduct}) => {
             onClick={handleSubmit}
             className="px-3 py-1 bg-red-500 rounded text-white mb-4 font-semibold hover:bg-red-600 transition-all"
           >
-            Upload Product
+            Edit Product
           </button>
         </form>
       </div>
@@ -280,4 +282,4 @@ const UploadProduct = ({ onClose ,fetchProduct}) => {
   );
 };
 
-export default UploadProduct;
+export default AdminEditCard;

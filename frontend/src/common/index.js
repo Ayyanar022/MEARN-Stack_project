@@ -25,6 +25,22 @@ const SummaryApi = {
     url: `${backendDomain}/api/userRole-update`,
     method: "post",
   },
+  uploadProduct: {
+    url: `${backendDomain}/api/upload-product`,
+    method: "post",
+  },
+  getAllProducts: {
+    url: `${backendDomain}/api/get-allproduct`,
+    method: "get",
+  },
+  editProduct: {
+    url: `${backendDomain}/api/edit-product`,
+    method: "post",
+  },
+  productCategoryDistinct: {
+    url: `${backendDomain}/api/get-distinctproduct`,
+    method: "get",
+  },
 };
 
 export default SummaryApi;
