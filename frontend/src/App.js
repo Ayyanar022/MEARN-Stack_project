@@ -33,7 +33,6 @@ function App() {
   return (
     <>
       <Context.Provider value={{ current_userDetails }}>
-        {/* <ToastContainer /> */}
         <ToastContainer
           position="top-right"
           autoClose={1800}
