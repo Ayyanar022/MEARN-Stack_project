@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import image1 from "../../src/assest/banner/img1.webp";
 import image2 from "../../src/assest/banner/img2.webp";
 import image3 from "../../src/assest/banner/img3.jpg";
@@ -33,9 +33,20 @@ const BannerProduct = () => {
     }
   };
 
+  useEffect(() => {
+    const intervel = setInterval(() => {
+      if (deskTopBannerImage.length - 1 > currentBannerIamge) {
+        nextImage();
+      } else {
+        setCurrentBannerImage(0);
+      }
+    }, 4000);
+    return () => clearInterval(intervel);
+  }, [currentBannerIamge]);
+
   return (
     <div className="container mx-auto px-4">
-      <div className="h-60 md:h-72 w-full bg-slate-200  relative ">
+      <div className="h-56 md:h-72 w-full bg-slate-200  relative ">
         <div className="absolute z-10 w-full h-full flex items-center">
           <div className="md:flex justify-between items-center w-full hidden ">
             <button
@@ -75,7 +86,7 @@ const BannerProduct = () => {
             <div className="w-full h-full min-w-full min-h-full transition-all ">
               <img
                 src={banner}
-                className="w-full h-full"
+                className="w-full h-full object-cover"
                 key={banner + index}
                 style={{
                   transform: `translatex(-${currentBannerIamge * 100}%)`,
