@@ -41,6 +41,10 @@ const SummaryApi = {
     url: `${backendDomain}/api/get-distinctproduct`,
     method: "get",
   },
+  getcategorywiseProduct:{
+    url : `${backendDomain}/api/category-wiseproduct`,
+    method:"post"
+  }
 };
 
 export default SummaryApi;
