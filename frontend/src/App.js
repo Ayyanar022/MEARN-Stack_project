@@ -47,7 +47,7 @@ function App() {
           transition={Bounce}
         />
         <Header />
-        <main className="min-h-[calc(100vh-112px)]">
+        <main className="min-h-[calc(100vh-112px)] pt-16">
           <Outlet />
         </main>
         <Footer />

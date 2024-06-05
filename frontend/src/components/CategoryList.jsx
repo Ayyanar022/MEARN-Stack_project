@@ -12,6 +12,7 @@ const CategoryList = () => {
     setLoading(true);
     const response = await fetch(SummaryApi.productCategoryDistinct.url);
     const resProductList = await response.json();
+    console.log("list", resProductList.data);
     setCategoryList(resProductList.data);
     setLoading(false);
   };

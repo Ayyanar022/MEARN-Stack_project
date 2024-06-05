@@ -37,7 +37,7 @@ const Header = () => {
     setAdminMenuDisplay((prev) => !prev);
   };
   return (
-    <header className="h-16 shadow-md lg:px-5 bg-white  ">
+    <header className="h-16 shadow-md lg:px-5 bg-white w-full fixed z-40 ">
       <div className="h-full items-center flex container mx-auto px-4 justify-between">
         <div>
           <Link to={"/"}>
