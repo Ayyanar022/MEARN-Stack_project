@@ -13,9 +13,9 @@ import { useDispatch } from "react-redux";
 import { setUserDetails } from "./store/userSlice";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const current_userDetails = async () => {
-    const dataResponse = await fetch(SummaryApi.current_user.url, {
+    const dataResponse = await fetch(SummaryApi?.current_user.url, {
       method: SummaryApi.current_user.method,
       credentials: "include",
     });

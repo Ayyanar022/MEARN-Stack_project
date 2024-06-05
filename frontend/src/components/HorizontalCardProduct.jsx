@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import fetchCategoryWiseProduct from "../helpers/fetchCategoryWiseProduct";
 import displayINR from "../helpers/displayCurrency";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import addToCart from "../helpers/addToCart";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -14,7 +16,6 @@ const HorizontalCardProduct = ({ category, heading }) => {
   const fetchData = async () => {
     setLoading(true);
     const categoryProduct = await fetchCategoryWiseProduct(category);
-    console.log("cat", categoryProduct);
     setData(categoryProduct?.data);
     setLoading(false);
   };
@@ -74,7 +75,10 @@ const HorizontalCardProduct = ({ category, heading }) => {
             })
           : data?.map((item, index) => {
               return (
-                <div className="w-full min-w-[290px] md:min-w-[330px] max-w-[290px] md:max-w-[330px]  h-36 rounded-sm shadow bg-white flex">
+                <Link
+                  to={"product/" + item?._id}
+                  className="w-full min-w-[290px] md:min-w-[330px] max-w-[290px] md:max-w-[330px]  h-36 rounded-sm shadow bg-white flex"
+                >
                   <div className="h-full bg-slate-200 p-4 min-w-[120px] md:min-w-[145px]">
                     <img
                       src={item?.productImage[0]}
@@ -94,13 +98,16 @@ const HorizontalCardProduct = ({ category, heading }) => {
                       </p>
                       <p className="text-slate-500 line-through">
                         {displayINR(item?.price)}
-                      </p>
+                      </p> 
                     </div>
-                    <button className="bg-red-500 hover:bg-red-600 px-3 py-0.5 text-white mt-2">
+                    <button
+                      onClick={(e) => addToCart(e, item?._id)}
+                      className="bg-red-500 hover:bg-red-600 px-3 py-0.5 text-white mt-2"
+                    >
                       Add To Cart
                     </button>
                   </div>
-                </div>
+                </Link>
               );
             })}
       </div>

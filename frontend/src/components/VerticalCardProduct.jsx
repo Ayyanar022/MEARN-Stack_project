@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import fetchCategoryWiseProduct from "../helpers/fetchCategoryWiseProduct";
 import displayINR from "../helpers/displayCurrency";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import addToCart from "../helpers/addToCart";
 
 const VerticalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -92,7 +93,10 @@ const VerticalCardProduct = ({ category, heading }) => {
                         {displayINR(item?.price)}
                       </p>
                     </div>
-                    <button className="bg-red-500 hover:bg-red-600 px-3 py-0.5 text-white mt-2">
+                    <button
+                      onClick={(e) => addToCart(e, item?._id)}
+                      className="bg-red-500 hover:bg-red-600 px-3 py-0.5 text-white mt-2"
+                    >
                       Add To Cart
                     </button>
                   </div>
