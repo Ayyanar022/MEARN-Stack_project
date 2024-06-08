@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import fetchCategoryWiseProduct from "../helpers/fetchCategoryWiseProduct";
 import displayINR from "../helpers/displayCurrency";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import addToCart from "../helpers/addToCart";
+import Context from "../context";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -29,6 +30,13 @@ const HorizontalCardProduct = ({ category, heading }) => {
   };
   const scrollLeft = () => {
     scrollElement.current.scrollLeft -= 300;
+  };
+
+  // cart count
+  const { getCartCount } = useContext(Context);
+  const handleAddToCart = async (e, id) => {
+    await addToCart(e, id);
+    getCartCount();
   };
 
   return (
@@ -98,10 +106,11 @@ const HorizontalCardProduct = ({ category, heading }) => {
                       </p>
                       <p className="text-slate-500 line-through">
                         {displayINR(item?.price)}
-                      </p> 
+                      </p>
                     </div>
                     <button
-                      onClick={(e) => addToCart(e, item?._id)}
+                      // onClick={(e) => addToCart(e, item?._id)}
+                      onClick={(e) => handleAddToCart(e, item?._id)}
                       className="bg-red-500 hover:bg-red-600 px-3 py-0.5 text-white mt-2"
                     >
                       Add To Cart

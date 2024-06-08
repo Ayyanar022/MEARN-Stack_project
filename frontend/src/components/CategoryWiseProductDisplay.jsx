@@ -6,13 +6,16 @@ import addToCart from "../helpers/addToCart";
 import { Link } from "react-router-dom";
 import Context from "../context";
 
-const VerticalCardProduct = ({ category, heading }) => {
+const CategoryWiseProductDisplay = ({ category, heading }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [scroll, setScroll] = useState(0);
-  const scrollElement = useRef();
-
   const loadingList = new Array(13).fill(null);
+
+  const {  getCartCount } = useContext(Context);
+  const handleAddToCart = async (e, id) => {
+    await addToCart(e, id);
+    getCartCount();
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -25,42 +28,11 @@ const VerticalCardProduct = ({ category, heading }) => {
     fetchData();
   }, []);
 
-  const scrollRight = () => {
-    scrollElement.current.scrollLeft += 300;
-  };
-  const scrollLeft = () => {
-    scrollElement.current.scrollLeft -= 300;
-  };
-
-  // cart count
-  const { getCartCount } = useContext(Context);
-  const handleAddToCart = async (e, id) => {
-    await addToCart(e, id);
-    getCartCount();
-  };
-
   return (
     <div className="container mx-auto px-4 my-6 relative">
       <h2 className="text-2xl font-semibold py-4">{heading}</h2>
 
-      <div
-        className="flex items-center gap44 md:gap-6 overflow-x-scroll scrollbar-hiden transition-all"
-        ref={scrollElement}
-      >
-        <button
-          onClick={scrollLeft}
-          className="text-xl z-10 bg-slate-100 rounded-full cursor-pointer shadow-md hover:bg-white hidden md:block   ml-4 hover:scale-125 transition-all absolute left-0 "
-        >
-          <FaAngleLeft />
-        </button>
-
-        <button
-          onClick={scrollRight}
-          className="text-xl z-10 bg-slate-100 rounded-full cursor-pointer shadow-md hidden md:block  hover:bg-white mr-4 hover:scale-125 transition-all absolute right-0 "
-        >
-          <FaAngleRight />
-        </button>
-
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-between md:gap-6 overflow-x-scroll scrollbar-hiden transition-all">
         {loading
           ? loadingList?.map((item, index) => {
               return (
@@ -106,7 +78,6 @@ const VerticalCardProduct = ({ category, heading }) => {
                       </p>
                     </div>
                     <button
-                      // onClick={(e) => addToCart(e, item?._id)}
                       onClick={(e) => handleAddToCart(e, item?._id)}
                       className="bg-red-500 hover:bg-red-600 px-3 py-0.5 text-white mt-2"
                     >
@@ -121,4 +92,4 @@ const VerticalCardProduct = ({ category, heading }) => {
   );
 };
 
-export default VerticalCardProduct;
+export default CategoryWiseProductDisplay;

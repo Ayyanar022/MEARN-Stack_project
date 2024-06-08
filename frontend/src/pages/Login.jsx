@@ -10,7 +10,7 @@ import Context from "../context";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { current_userDetails } = useContext(Context);
+  const { current_userDetails, getCartCount } = useContext(Context);
 
   const [data, setData] = useState({
     email: "",
@@ -38,11 +38,9 @@ const Login = () => {
     });
 
     const dataApi = await dataResponse.json();
-    console.log("dataApi", dataApi);
-    console.log("dataApi", dataApi);
     if (dataApi.success) {
       toast.success(dataApi.message);
-
+      getCartCount(); // to fetch cart count
       navigate("/");
       current_userDetails();
     }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "./Logo";
 import { BiSearchAlt } from "react-icons/bi";
 import { BiSolidUserCircle } from "react-icons/bi"; // user icon
@@ -9,11 +9,13 @@ import SummaryApi from "../common";
 import { toast } from "react-toastify";
 import { setUserDetails } from "../store/userSlice";
 import ROLE from "../common/role";
+import Context from "../context";
 
 const Header = () => {
   const [adminMenuDisplay, setAdminMenuDisplay] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.user?.user);
+  const context = useContext(Context);
 
   const handleLogout = async (e) => {
     const fetchData = await fetch(SummaryApi.logOut.url, {
@@ -36,6 +38,7 @@ const Header = () => {
   const handleAdminMenuDisplay = (e) => {
     setAdminMenuDisplay((prev) => !prev);
   };
+
   return (
     <header className="h-16 shadow-md lg:px-5 bg-white w-full fixed z-40 ">
       <div className="h-full items-center flex container mx-auto px-4 justify-between">
@@ -92,14 +95,17 @@ const Header = () => {
             )}
           </div>
 
-          <div className="text-3xl relative cursor-pointer ">
-            <span>
-              <LuShoppingCart />
-            </span>
-            <div className="bg-red-500 text-white w-5 h-5 p-2 flex justify-center items-center rounded-full absolute -top-1 -right-1">
-              <p className="text-sm ">0</p>
+          {user?._id && (
+            <div className="text-3xl relative cursor-pointer ">
+              <span>
+                <LuShoppingCart />
+              </span>
+
+              <div className="bg-red-500 text-white w-5 h-5 p-1 flex justify-center items-center rounded-full absolute -top-1 -right-1">
+                <p className="text-xs text-center">{context?.cartCount}</p>
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="flex justify-center items-center">
             {user?._id ? (
