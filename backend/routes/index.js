@@ -16,6 +16,7 @@ const getCategoryWiseProduct = require("../controller/product/getCategoryWisePro
 const getProductDetails = require("../controller/product/getProductDetails");
 const addToCartController = require("../controller/user/addToCartController");
 const countCartController = require("../controller/user/countCartController");
+const addToCartViewProduct = require("../controller/user/addToCartViewProduct");
 
 router.post("/signup", userSignUpController);
 router.post("/signin", userSignInController);
@@ -37,4 +38,5 @@ router.post("/product-details", getProductDetails);
 //add to cart
 router.post("/addTo-cart", authToken, addToCartController);
 router.get("/cart-count", authToken, countCartController);
+router.get("/getCart-product", authToken, addToCartViewProduct);
 module.exports = router;

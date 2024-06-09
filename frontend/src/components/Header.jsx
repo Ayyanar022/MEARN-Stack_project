@@ -96,7 +96,7 @@ const Header = () => {
           </div>
 
           {user?._id && (
-            <div className="text-3xl relative cursor-pointer ">
+            <Link to={"/cart"} className="text-3xl relative cursor-pointer ">
               <span>
                 <LuShoppingCart />
               </span>
@@ -104,7 +104,7 @@ const Header = () => {
               <div className="bg-red-500 text-white w-5 h-5 p-1 flex justify-center items-center rounded-full absolute -top-1 -right-1">
                 <p className="text-xs text-center">{context?.cartCount}</p>
               </div>
-            </div>
+            </Link>
           )}
 
           <div className="flex justify-center items-center">
