@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import SummaryApi from "../common";
 import Context from "../context/index";
 import displayINR from "../helpers/displayCurrency";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 
 const Cart = () => {
   const [data, setData] = useState([]);
@@ -27,7 +28,62 @@ const Cart = () => {
     fetchData();
   }, []);
 
-  console.log("data--", data);
+  const increaseQty = async (id, qty, e) => {
+    e.preventDefault();
+    const response = await fetch(SummaryApi.updateCartCount.url, {
+      method: SummaryApi.updateCartCount.method,
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        quantity: qty + 1,
+        _id: id,
+      }),
+    });
+    const resData = await response.json();
+    if (resData.success) {
+      fetchData();
+    }
+  };
+
+  const decreseQty = async (id, qty, e) => {
+    e.preventDefault();
+    if (qty >= 2) {
+      const response = await fetch(SummaryApi.updateCartCount.url, {
+        method: SummaryApi.updateCartCount.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          quantity: qty - 1,
+          _id: id,
+        }),
+      });
+      const resData = await response.json();
+      if (resData.success) {
+        fetchData();
+      }
+    }
+  };
+
+  const deleteCartProduct = async (id) => {
+    console.log("id99", id);
+    const response = await fetch(SummaryApi.delteCartItem.url, {
+      method: SummaryApi.delteCartItem.method,
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json", // Corrected header name
+      },
+      body: JSON.stringify({ _id: id }), // Ensure body is correctly formatted
+    });
+    const resData = await response.json();
+    if (resData.success) {
+      fetchData();
+      context.getCartCount();
+    }
+  };
 
   return (
     <div className="container mx-auto">
@@ -61,7 +117,14 @@ const Cart = () => {
                         className="w-full h-full object-scale-down mix-blend-multiply"
                       />
                     </div>
-                    <div className="py-2 px-4">
+                    <div className="py-2 px-4 relative">
+                      {/** delete product */}
+                      <div
+                        onClick={() => deleteCartProduct(pro?._id)}
+                        className="absolute p-2 hover:text-red-500 text-lg cursor-pointer right-0"
+                      >
+                        <MdOutlineDeleteOutline />
+                      </div>
                       <h2 className="text-lg lg:text-xl text-ellipsis line-clamp-1">
                         {pro?.productId?.productName}
                       </h2>
@@ -72,11 +135,21 @@ const Cart = () => {
                         {displayINR(pro?.productId?.sellingPrice)}
                       </p>
                       <div className="flex items-center gap-3 mt-1">
-                        <button className="border border-red-500 text-red-500 w-6 h-6 flex justify-center items-center cursor-pointer transition-all hover:bg-red-500 hover:text-white">
+                        <button
+                          onClick={(e) =>
+                            decreseQty(pro?._id, pro?.quantity, e)
+                          }
+                          className="border border-red-500 text-red-500 w-6 h-6 flex justify-center items-center cursor-pointer transition-all hover:bg-red-500 hover:text-white"
+                        >
                           -
                         </button>
                         <spam>{pro?.quantity}</spam>
-                        <button className=" border border-red-500 text-red-500 w-6 h-6 flex justify-center items-center cursor-pointer transition-all  hover:bg-red-500 hover:text-white">
+                        <button
+                          onClick={(e) =>
+                            increaseQty(pro?._id, pro?.quantity, e)
+                          }
+                          className=" border border-red-500 text-red-500 w-6 h-6 flex justify-center items-center cursor-pointer transition-all  hover:bg-red-500 hover:text-white"
+                        >
                           +
                         </button>
                       </div>
