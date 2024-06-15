@@ -8,7 +8,6 @@ async function uploadProductController(req, res) {
     if (!uploadProductPermission(sessionUserId)) {
       throw new Error("Permission denaid");
     }
-    console.log("req,body", req.body);
     const uploadProduct = new productModel(req.body);
     const saveProduct = await uploadProduct.save();
 

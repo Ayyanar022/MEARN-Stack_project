@@ -23,8 +23,6 @@ const CategoryProduct = () => {
   const [selctCategory, setSelectCategory] = useState(urlCategoryObject);
   const [sortBy, setSortBy] = useState("");
 
-  console.log("sortby", sortBy);
-
   const fetchData = async () => {
     const response = await fetch(SummaryApi?.filterProduct?.url, {
       method: SummaryApi?.filterProduct?.method,

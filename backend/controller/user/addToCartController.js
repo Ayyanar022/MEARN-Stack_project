@@ -5,13 +5,11 @@ const addToCartController = async (req, res) => {
     const { productId } = req.body;
     const currentUser = req.userId;
 
-    console.log("check", productId, currentUser);
 
     const isProductAvilable = await addToCartModule.findOne({
       productId,
     });
 
-    console.log("isproductavailable", isProductAvilable);
 
     if (isProductAvilable) {
       return res.json({

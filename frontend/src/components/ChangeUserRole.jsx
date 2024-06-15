@@ -9,7 +9,6 @@ const ChangeUserRole = ({ name, email, role, onClose, userId, allUser }) => {
 
   const handleRoleChange = (e) => {
     setUserRole(e.target.value);
-    // console.log(e.target.value);
   };
 
   const updateUserRole = async () => {
@@ -29,8 +28,6 @@ const ChangeUserRole = ({ name, email, role, onClose, userId, allUser }) => {
       allUser();
       toast.success(responseData.message);
     }
-
-    console.log("responserole--1", responseData);
   };
 
   return (

@@ -25,7 +25,6 @@ const AllUser = () => {
       const responseData = await response.json();
 
       if (responseData.success) {
-        console.log("responseData", responseData.data);
         setAllUsers(responseData.data);
       }
 
@@ -40,7 +39,6 @@ const AllUser = () => {
   }, []);
 
   const handlePopupClick = (user) => {
-    console.log("user ", user);
     setUpdateUserDetails(user);
     setOpenUpdateRole(true);
   };

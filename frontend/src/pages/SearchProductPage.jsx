@@ -13,7 +13,6 @@ const SearchProductPage = () => {
       setLoading(true);
       const response = await fetch(SummaryApi.searchProduct.url + query.search);
       const resData = await response.json();
-      console.log("resData", resData.data);
       setData(resData.data);
       setLoading(false);
     } catch (err) {

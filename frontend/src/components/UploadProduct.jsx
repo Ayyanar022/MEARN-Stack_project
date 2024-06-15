@@ -57,7 +57,6 @@ const UploadProduct = ({ onClose ,fetchProduct}) => {
 
   // to remove image from  array
   const deleteProductImage = (index) => {
-    console.log("index", index);
 
     const newProductImage = [...data.productImage];
     newProductImage.splice(index, 1);

@@ -7,8 +7,6 @@ async function userRoleUpdate(req, res) {
     const currentUser = req.userId;
 
     const userCheck = await userModel.findById(currentUser);
-    // console.log("user.role", userCheck.role, "role", role);
-
     const payload = {
       ...(email && { email: email }),
       ...(name && { name: name }),
@@ -16,10 +14,6 @@ async function userRoleUpdate(req, res) {
     };
 
     const updateUser = await userModel.findByIdAndUpdate(userId, payload);
-    // const data = await updateUser.json();
-    console.log("updateUser", updateUser);
-    console.log("payload", payload);
-
     res.json({
       data: updateUser,
       message: "User updated successfully ..",

@@ -73,7 +73,6 @@ const Cart = () => {
   };
 
   const deleteCartProduct = async (id) => {
-    console.log("id99", id);
     const response = await fetch(SummaryApi.delteCartItem.url, {
       method: SummaryApi.delteCartItem.method,
       credentials: "include",

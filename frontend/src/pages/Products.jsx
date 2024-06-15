@@ -14,7 +14,6 @@ const Products = () => {
       const dataResponse = await response.json();
       setAllProducts(dataResponse?.data || []);
 
-      console.log("getdata", dataResponse.data);
     } catch (error) {
       console.log("Error fetching all products");
     }
