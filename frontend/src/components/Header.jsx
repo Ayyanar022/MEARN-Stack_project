@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import { BiSearchAlt } from "react-icons/bi";
 import { BiSolidUserCircle } from "react-icons/bi"; // user icon
 import { LuShoppingCart } from "react-icons/lu"; // cart icon
-import { Link, json } from "react-router-dom";
+import { Link, json, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SummaryApi from "../common";
 import { toast } from "react-toastify";
@@ -13,11 +13,17 @@ import Context from "../context";
 
 const Header = () => {
   const [adminMenuDisplay, setAdminMenuDisplay] = useState(false);
+
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.user?.user);
   const context = useContext(Context);
+  const navigate = useNavigate();
+  const searchInputLocation = useLocation();
+  const [search, setSearch] = useState(
+    searchInputLocation?.search?.split("=")[1]
+  );
 
-  const handleLogout = async (e) => {
+   const handleLogout = async (e) => {
     const fetchData = await fetch(SummaryApi.logOut.url, {
       method: SummaryApi.logOut.method,
       credentials: "include",
@@ -39,6 +45,19 @@ const Header = () => {
     setAdminMenuDisplay((prev) => !prev);
   };
 
+  // serch
+  const handleSearch = (e) => {
+    const { value } = e.target;
+
+    setSearch(value);
+
+    if (value) {
+      navigate(`/search?q=${value}`);
+    } else {
+      navigate("/search");
+    }
+  };
+
   return (
     <header className="h-16 shadow-md lg:px-5 bg-white w-full fixed z-40 ">
       <div className="h-full items-center flex container mx-auto px-4 justify-between">
@@ -50,6 +69,8 @@ const Header = () => {
 
         <div className=" hidden  lg:flex items-center w-full justify-between max-w-sm  border rounded-full focus-within:shadow pl-3">
           <input
+            onChange={handleSearch}
+            value={search}
             type="text"
             placeholder="Search Peoduct ..."
             className="w-full  outline-none"

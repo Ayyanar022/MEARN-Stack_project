@@ -5,13 +5,14 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import addToCart from "../helpers/addToCart";
 import { Link } from "react-router-dom";
 import Context from "../context";
+import scrollTop from "../helpers/scrollTop";
 
 const CategoryWiseProductDisplay = ({ category, heading }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const loadingList = new Array(13).fill(null);
 
-  const {  getCartCount } = useContext(Context);
+  const { getCartCount } = useContext(Context);
   const handleAddToCart = async (e, id) => {
     await addToCart(e, id);
     getCartCount();
@@ -53,8 +54,9 @@ const CategoryWiseProductDisplay = ({ category, heading }) => {
           : data?.map((item, index) => {
               return (
                 <Link
-                  to={"product/" + item?._id}
+                  to={"/product/" + item?._id}
                   className="w-full min-w-[290px]  md:min-w-[330px] max-w-[290px] md:max-w-[330px]  rounded-sm shadow bg-white "
+                  onClick={scrollTop}
                 >
                   <div className=" bg-slate-200 p-4 h-48 min-w-[280px] md:min-w-[145px] flex justify-center items-center cursor-pointer ">
                     <img
