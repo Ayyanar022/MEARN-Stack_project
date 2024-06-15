@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import SummaryApi from "../common/index.js";
-import VerticalCard from "../components/VerticalCard.js";
+// import VerticalCard from "../components/VerticalCard.js";
 
 const SearchProductPage = () => {
   const query = useLocation();
@@ -40,7 +40,8 @@ const SearchProductPage = () => {
       )}
 
       {data.length !== 0 && !loading && (
-        <VerticalCard data={data} loading={loading} />
+        // <VerticalCard data={data} loading={loading} />
+        <h1></h1>
       )}
     </div>
   );

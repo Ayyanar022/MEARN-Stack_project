@@ -96,7 +96,7 @@ const CategoryList = () => {
           : categoryList?.map((product, index) => (
               <Link
                 key={index}
-                to={"/product-category/" + product?.category}
+                to={"/product-category?category=" + product?.category}
                 className="cursor-pointer flex-shrink-0"
               >
                 <div className="h-12 w-12 md:h-16 md:w-16 rounded-full overflow-hidden p-2 bg-slate-200 flex items-center justify-center">

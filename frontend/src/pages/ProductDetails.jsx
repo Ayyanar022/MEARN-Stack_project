@@ -1,11 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import SummaryApi from "../common";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IoMdStar } from "react-icons/io"; // star icon
 import { IoMdStarHalf } from "react-icons/io"; // half start icon
 import displayINR from "../helpers/displayCurrency";
 import VerticalCardProduct from "../components/VerticalCardProduct";
 import CategoryWiseProductDisplay from "../components/CategoryWiseProductDisplay";
+import addToCart from "../helpers/addToCart";
+import Context from "../context";
 
 const ProductDetails = () => {
   const [data, setData] = useState({
@@ -23,6 +25,8 @@ const ProductDetails = () => {
   const [zoomImage, setZoomImage] = useState();
   const [zoomImageOpen, setZoomImageOpen] = useState(false);
   const params = useParams();
+  const { getCartCount } = useContext(Context);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
@@ -66,6 +70,17 @@ const ProductDetails = () => {
 
   const handleZoomOut = () => {
     setZoomImageOpen(false);
+  };
+
+  const handleAddToCart = async (e, id) => {
+    await addToCart(e, id);
+    getCartCount();
+  };
+
+  const handleBuy = async (e, id) => {
+    await addToCart(e, id);
+    getCartCount();
+    navigate("/cart");
   };
 
   return (
@@ -177,10 +192,16 @@ const ProductDetails = () => {
             </div>
 
             <div className="flex gap-3 items-center my-2">
-              <button className="border-2 py-1 min-w-[120px] hover:bg-red-500 hover:text-white transition-all text-red-600 border-red-500 px-3 font-medium rounded ">
+              <button
+                onClick={(e) => handleBuy(e, data?._id)}
+                className="border-2 py-1 min-w-[120px] hover:bg-red-500 hover:text-white transition-all text-red-600 border-red-500 px-3 font-medium rounded "
+              >
                 Buy
               </button>
-              <button className="border-2 py-1 min-w-[120px] border-red-500 px-3 font-medium rounded text-white bg-red-500 hover:bg-white hover:text-red-600 transition-all  ">
+              <button
+                onClick={(e) => handleAddToCart(e, data?._id)}
+                className="border-2 py-1 min-w-[120px] border-red-500 px-3 font-medium rounded text-white bg-red-500 hover:bg-white hover:text-red-600 transition-all  "
+              >
                 Add To Cart
               </button>
             </div>

@@ -19,11 +19,11 @@ const Header = () => {
   const context = useContext(Context);
   const navigate = useNavigate();
   const searchInputLocation = useLocation();
-  const [search, setSearch] = useState(
-    searchInputLocation?.search?.split("=")[1]
-  );
+  const url = new URLSearchParams(searchInputLocation?.search);
+  const searchQuery = url.getAll("q");
+  const [search, setSearch] = useState(searchQuery);
 
-   const handleLogout = async (e) => {
+  const handleLogout = async (e) => {
     const fetchData = await fetch(SummaryApi.logOut.url, {
       method: SummaryApi.logOut.method,
       credentials: "include",
@@ -34,6 +34,7 @@ const Header = () => {
     if (responseData?.success) {
       toast.success(responseData.message);
       dispatch(setUserDetails(null));
+      navigate("/");
     }
 
     if (responseData?.error) {
